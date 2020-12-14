@@ -2,10 +2,12 @@ package com.lambdaschool.crudyrestaurants.controllers;
 
 import com.lambdaschool.crudyrestaurants.models.Restaurant;
 import com.lambdaschool.crudyrestaurants.services.RestaurantServices;
+import com.lambdaschool.crudyrestaurants.views.MenuCounts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,12 +28,37 @@ public class RestaurantController {
     }
 
     // http://localhost:2019/restaurants/restaurant/10
+    @GetMapping(value = "/restaurant/{restaurantId}", produces = {"application/json"})
+    public ResponseEntity<?> findRestaurantById(@PathVariable long restaurantId) {
+        Restaurant r = restaurantServices.findRestaurantById(restaurantId);
+        return new ResponseEntity<>(r, HttpStatus.OK);
+    }
 
     // http://localhost:2019/restaurants/name/Good%20Eats
+    @GetMapping(value = "/name/{restaurantName}", produces = {"application/json"})
+    public ResponseEntity<?> findRestaurantByName(@PathVariable String restaurantName) {
+        Restaurant r = restaurantServices.findRestaurantByName(restaurantName);
+        return new ResponseEntity<>(r, HttpStatus.OK);
+    }
 
-    // http://localhost:2019/restaurants/likename/eat
+    // http://localhost:2019/restaurants/likename/cafe
+    @GetMapping(value = "/likename/{subname}", produces = {"application/json"})
+    public ResponseEntity<?> findRestaurantByLikeName(@PathVariable String subname) {
+        List<Restaurant> rtnList = restaurantServices.findByLikeName(subname);
+        return new ResponseEntity<>(rtnList, HttpStatus.OK);
+    }
 
     // http://localhost:2019/restaurants/menucounts
+    @GetMapping(value = "/menucounts", produces = {"application/json"})
+    public ResponseEntity<?> getMenuCounts() {
+        List<MenuCounts> rtnList = restaurantServices.countMenusByRestaurant();
+        return new ResponseEntity<>(rtnList, HttpStatus.OK);
+    }
 
     // http://localhost:2019/restaurants/likedish/cheese
+    @GetMapping(value = "/likedish/{dish}", produces = {"application/json"})
+    public ResponseEntity<?> findRestaurantByDish(@PathVariable String dish) {
+        List<Restaurant> rtnList = restaurantServices.findRestaurantByDish(dish);
+        return new ResponseEntity<>(rtnList, HttpStatus.OK);
+    }
 }
