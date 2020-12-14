@@ -1,6 +1,7 @@
 package com.lambdaschool.crudyrestaurants;
 
 //import com.github.javafaker.Faker;
+import com.github.javafaker.Faker;
 import com.lambdaschool.crudyrestaurants.models.Menu;
 import com.lambdaschool.crudyrestaurants.models.Payment;
 import com.lambdaschool.crudyrestaurants.models.Restaurant;
@@ -183,8 +184,7 @@ public class SeedData implements CommandLineRunner
             fakeRestaurant.getPayments()
                     .add(pay1);
             restaurantServices.save(fakeRestaurant);
-        }
+        }*/
 
-         */
     }
 }
